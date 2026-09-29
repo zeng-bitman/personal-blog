@@ -48,3 +48,28 @@ Backend
 ├── Sessions
 ├── Flash messages
 └── Authentication protection
+
+
+covered a lot in this project:
+
+Flask application setup
+PostgreSQL database connection
+Articles database/CRUD
+Guest and admin sections
+Admin login/logout
+Password hashing
+Sessions
+Flash messages
+Add, edit, and delete articles
+Delete confirmation
+Custom 404 page
+Tailwind CSS
+JavaScript interactions
+.env security
+.gitignore
+Git repository setup
+Git commits
+Branch management with main
+GitHub remote
+git push
+Keeping the project isolated from your other projects
