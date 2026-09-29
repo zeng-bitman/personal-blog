@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Edit Article | Blog Admin</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body class="bg-slate-100 text-slate-900 min-h-screen">
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="bg-slate-900 text-white">
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="flex items-center justify-between h-16">
+
+                <a
+                    href="/dashboard"
+                    class="text-xl font-bold"
+                >
+                    Blog Admin
+                </a>
+
+
+                <div class="flex items-center gap-5">
+
+                    <a
+                        href="/dashboard"
+                        class="text-slate-300
+                               hover:text-white
+                               transition"
+                    >
+                        Dashboard
+                    </a>
+
+                    <a
+                        href="/logout"
+                        class="text-slate-300
+                               hover:text-white
+                               transition"
+                    >
+                        Logout
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main
+        class="max-w-4xl
+               mx-auto
+               px-6
+               py-10"
+    >
+
+        <!-- Page heading -->
+
+        <div class="mb-8">
+
+            <p
+                class="text-sm
+                       uppercase
+                       tracking-widest
+                       text-slate-500
+                       font-semibold
+                       mb-2"
+            >
+                Administration
+            </p>
+
+            <h1
+                class="text-3xl
+                       md:text-4xl
+                       font-bold"
+            >
+                Edit Article
+            </h1>
+
+            <p
+                class="text-slate-500
+                       mt-2"
+            >
+                Update your article and save the changes.
+            </p>
+
+        </div>
+
+
+        <!-- ================= FORM ================= -->
+
+        <form
+            method="POST"
+            action="/edit-article/{{ article[0] }}"
+            class="bg-white
+                   border
+                   border-slate-200
+                   rounded-2xl
+                   shadow-sm
+                   p-6
+                   md:p-8"
+        >
+
+            <!-- Title -->
+
+            <div class="mb-7">
+
+                <label
+                    for="title"
+                    class="block
+                           text-sm
+                           font-semibold
+                           text-slate-700
+                           mb-2"
+                >
+                    Article Title
+                </label>
+
+
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="{{ article[1] }}"
+                    maxlength="200"
+                    required
+                    class="w-full
+                           px-4 py-3
+                           rounded-lg
+                           border
+                           border-slate-300
+                           outline-none
+                           focus:ring-2
+                           focus:ring-slate-400
+                           focus:border-slate-500
+                           transition"
+                >
+
+            </div>
+
+
+            <!-- Publication Date -->
+
+            <div class="mb-7">
+
+                <label
+                    for="publication_date"
+                    class="block
+                           text-sm
+                           font-semibold
+                           text-slate-700
+                           mb-2"
+                >
+                    Publication Date
+                </label>
+
+
+                <input
+                    type="date"
+                    id="publication_date"
+                    name="publication_date"
+                    value="{{ article[3] }}"
+                    required
+                    class="w-full
+                           px-4 py-3
+                           rounded-lg
+                           border
+                           border-slate-300
+                           outline-none
+                           focus:ring-2
+                           focus:ring-slate-400
+                           focus:border-slate-500
+                           transition"
+                >
+
+            </div>
+
+
+            <!-- Content -->
+
+            <div class="mb-7">
+
+                <div
+                    class="flex
+                           items-center
+                           justify-between
+                           mb-2"
+                >
+
+                    <label
+                        for="content"
+                        class="block
+                               text-sm
+                               font-semibold
+                               text-slate-700"
+                    >
+                        Article Content
+                    </label>
+
+
+                    <span
+                        id="characterCount"
+                        class="text-xs
+                               text-slate-400"
+                    >
+                        0 characters
+                    </span>
+
+                </div>
+
+
+                <textarea
+                    id="content"
+                    name="content"
+                    rows="16"
+                    required
+                    class="w-full
+                           px-4 py-3
+                           rounded-lg
+                           border
+                           border-slate-300
+                           outline-none
+                           resize-y
+                           focus:ring-2
+                           focus:ring-slate-400
+                           focus:border-slate-500
+                           leading-7
+                           transition"
+                >{{ article[2] }}</textarea>
+
+
+                <p
+                    class="text-xs
+                           text-slate-400
+                           mt-2"
+                >
+                    Update your article content as needed.
+                </p>
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div
+                class="flex
+                       flex-col-reverse
+                       sm:flex-row
+                       sm:justify-end
+                       gap-3
+                       pt-5
+                       border-t
+                       border-slate-200"
+            >
+
+                <a
+                    href="/dashboard"
+                    class="text-center
+                           px-6 py-3
+                           rounded-lg
+                           border
+                           border-slate-300
+                           text-slate-700
+                           font-semibold
+                           hover:bg-slate-50
+                           transition"
+                >
+                    Cancel
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="px-6 py-3
+                           rounded-lg
+                           bg-slate-900
+                           text-white
+                           font-semibold
+                           hover:bg-slate-700
+                           transition"
+                >
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </main>
+
+
+    <!-- JavaScript -->
+
+    <script
+        src="{{ url_for('static', filename='script.js') }}"
+    ></script>
+
+</body>
+
+</html>

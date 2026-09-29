@@ -1,0 +1,50 @@
+PERSONAL BLOG
+│
+├── GUEST
+│   ├── Home                 ✅
+│   └── Article              ✅
+│
+├── ADMIN
+│   ├── Login                ✅
+│   ├── Dashboard            ✅
+│   ├── Add Article          ✅
+│   ├── Edit Article         ✅
+│   ├── Delete Article       ✅
+│   └── Logout               ✅
+│
+├── DATABASE
+│   └── PostgreSQL           ✅
+│
+├── SECURITY
+│   ├── Password hashing     ✅
+│   ├── Session protection   ✅
+│   └── .env configuration   ✅
+│
+└── FRONTEND
+    ├── Tailwind CSS         ✅
+    ├── Custom CSS           ✅
+    └── JavaScript           ✅
+UX
+└── Flash notifications   ✅
+
+
+Guest
+├── Home
+└── Article
+     └── 404 handling
+
+Admin
+├── Login
+├── Dashboard
+├── Add Article
+├── Edit Article
+├── Delete Article
+└── Logout
+
+Backend
+├── Flask
+├── PostgreSQL
+├── Password hashing
+├── Sessions
+├── Flash messages
+└── Authentication protection

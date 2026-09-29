@@ -1,0 +1,52 @@
+/* ==============================
+   GLOBAL
+================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ==============================
+   ARTICLE CARD
+================================= */
+
+article {
+    will-change: transform;
+}
+
+
+/* ==============================
+   TEXT SELECTION
+================================= */
+
+::selection {
+    background: #0f172a;
+    color: white;
+}
+
+
+/* ==============================
+   SCROLLBAR
+================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #64748b;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+}

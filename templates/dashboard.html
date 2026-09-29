@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | My Personal Blog</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body class="bg-slate-100 text-slate-900 min-h-screen">
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="bg-slate-900 text-white">
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="flex items-center justify-between h-16">
+
+                <!-- Logo -->
+
+                <a href="/dashboard" class="text-xl font-bold tracking-wide">
+                    Blog Admin
+                </a>
+
+
+                <!-- Navigation -->
+
+                <div class="flex items-center gap-5">
+
+                    <a href="/" class="text-slate-300
+                               hover:text-white
+                               transition">
+                        View Blog
+                    </a>
+
+                    <a href="/logout" class="bg-white
+                               text-slate-900
+                               px-4 py-2
+                               rounded-lg
+                               text-sm
+                               font-semibold
+                               hover:bg-slate-200
+                               transition">
+                        Logout
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= FLASH MESSAGES ================= -->
+
+    <div class="max-w-7xl
+               mx-auto
+               px-6
+               pt-6">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+        {% for category, message in messages %}
+
+        <div class="flash-message
+                               mb-4
+                               rounded-lg
+                               border
+                               border-green-200
+                               bg-green-50
+                               px-5 py-4
+                               text-green-700
+                               transition-all
+                               duration-300">
+
+            ✓ {{ message }}
+
+        </div>
+
+        {% endfor %}
+
+        {% endif %}
+
+        {% endwith %}
+
+    </div>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="max-w-7xl
+               mx-auto
+               px-6
+               py-10">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="flex
+                   flex-col
+                   md:flex-row
+                   md:items-center
+                   md:justify-between
+                   gap-5
+                   mb-10">
+
+            <div>
+
+                <p class="text-sm
+                           uppercase
+                           tracking-widest
+                           text-slate-500
+                           font-semibold
+                           mb-2">
+                    Administration
+                </p>
+
+                <h1 class="text-3xl
+                           md:text-4xl
+                           font-bold">
+                    Welcome, {{ username }}
+                </h1>
+
+                <p class="text-slate-500
+                           mt-2">
+                    Manage your published articles.
+                </p>
+
+            </div>
+
+
+            <!-- Add Article -->
+
+            <a href="/add-article" class="inline-flex
+                       items-center
+                       justify-center
+                       gap-2
+                       bg-slate-900
+                       text-white
+                       px-6 py-3
+                       rounded-lg
+                       font-semibold
+                       hover:bg-slate-700
+                       transition">
+
+                <span class="text-xl">
+                    +
+                </span>
+
+                New Article
+
+            </a>
+
+        </div>
+
+
+        <!-- ================= STAT ================= -->
+
+        <div class="grid
+                   grid-cols-1
+                   sm:grid-cols-2
+                   lg:grid-cols-3
+                   gap-5
+                   mb-10">
+
+            <div class="bg-white
+                       border
+                       border-slate-200
+                       rounded-xl
+                       p-6">
+
+                <p class="text-sm
+                           text-slate-500
+                           mb-2">
+                    Published Articles
+                </p>
+
+                <p class="text-3xl
+                           font-bold">
+                    {{ articles|length }}
+                </p>
+
+            </div>
+
+
+            <div class="bg-white
+                       border
+                       border-slate-200
+                       rounded-xl
+                       p-6">
+
+                <p class="text-sm
+                           text-slate-500
+                           mb-2">
+                    Admin Account
+                </p>
+
+                <p class="text-lg
+                           font-bold">
+                    {{ username }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ARTICLES ================= -->
+
+        <section class="bg-white
+                   border
+                   border-slate-200
+                   rounded-2xl
+                   overflow-hidden">
+
+            <!-- Section Header -->
+
+            <div class="px-6
+                       py-5
+                       border-b
+                       border-slate-200">
+
+                <h2 class="text-xl
+                           font-bold">
+                    Your Articles
+                </h2>
+
+            </div>
+
+
+            {% if articles %}
+
+
+            <!-- ================= DESKTOP TABLE ================= -->
+
+            <div class="hidden md:block overflow-x-auto">
+
+                <table class="w-full">
+
+                    <thead class="bg-slate-50
+                               border-b
+                               border-slate-200">
+
+                        <tr>
+
+                            <th class="text-left
+                                       px-6 py-4
+                                       text-sm
+                                       font-semibold
+                                       text-slate-600">
+                                Title
+                            </th>
+
+                            <th class="text-left
+                                       px-6 py-4
+                                       text-sm
+                                       font-semibold
+                                       text-slate-600">
+                                Publication Date
+                            </th>
+
+                            <th class="text-right
+                                       px-6 py-4
+                                       text-sm
+                                       font-semibold
+                                       text-slate-600">
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody class="divide-y
+                               divide-slate-100">
+
+                        {% for article in articles %}
+
+                        <tr class="hover:bg-slate-50
+                                   transition">
+
+                            <!-- Title -->
+
+                            <td class="px-6 py-5">
+
+                                <p class="font-semibold">
+                                    {{ article[1] }}
+                                </p>
+
+                                <p class="text-sm
+                                           text-slate-500
+                                           mt-1">
+                                    Article #{{ article[0] }}
+                                </p>
+
+                            </td>
+
+
+                            <!-- Date -->
+
+                            <td class="px-6 py-5
+                                       text-sm
+                                       text-slate-500">
+
+                                {{ article[3] }}
+
+                            </td>
+
+
+                            <!-- Actions -->
+
+                            <td class="px-6 py-5">
+
+                                <div class="flex
+                                           justify-end
+                                           gap-2">
+
+                                    <a href="/article/{{ article[0] }}" class="px-3 py-2
+                                               rounded-lg
+                                               text-sm
+                                               font-medium
+                                               bg-slate-100
+                                               text-slate-700
+                                               hover:bg-slate-200
+                                               transition">
+                                        View
+                                    </a>
+
+
+                                    <a href="/edit-article/{{ article[0] }}" class="px-3 py-2
+                                               rounded-lg
+                                               text-sm
+                                               font-medium
+                                               bg-blue-50
+                                               text-blue-700
+                                               hover:bg-blue-100
+                                               transition">
+                                        Edit
+                                    </a>
+
+
+                                    <button type="button" onclick="openDeleteModal(
+                                            '{{ article[0] }}',
+                                            '{{ article[1] | e }}'
+                                        )" class="px-3 py-2
+                                               rounded-lg
+                                               text-sm
+                                               font-medium
+                                               bg-red-50
+                                               text-red-700
+                                               hover:bg-red-100
+                                               transition">
+                                        Delete
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- ================= MOBILE CARDS ================= -->
+
+            <div class="md:hidden
+                       divide-y
+                       divide-slate-200">
+
+                {% for article in articles %}
+
+                <div class="p-6">
+
+                    <h3 class="font-bold
+                               text-lg">
+                        {{ article[1] }}
+                    </h3>
+
+
+                    <p class="text-sm
+                               text-slate-500
+                               mt-2">
+                        Published {{ article[3] }}
+                    </p>
+
+
+                    <div class="flex
+                               gap-2
+                               mt-5">
+
+                        <a href="/article/{{ article[0] }}" class="px-3 py-2
+                                   rounded-lg
+                                   text-sm
+                                   bg-slate-100
+                                   text-slate-700">
+                            View
+                        </a>
+
+
+                        <a href="/edit-article/{{ article[0] }}" class="px-3 py-2
+                                   rounded-lg
+                                   text-sm
+                                   bg-blue-50
+                                   text-blue-700">
+                            Edit
+                        </a>
+
+
+                        <button type="button" onclick="openDeleteModal(
+                                '{{ article[0] }}',
+                                '{{ article[1] | e }}'
+                            )" class="px-3 py-2
+                                   rounded-lg
+                                   text-sm
+                                   bg-red-50
+                                   text-red-700">
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            {% else %}
+
+
+            <!-- ================= EMPTY STATE ================= -->
+
+            <div class="text-center
+                       px-6
+                       py-20">
+
+                <div class="text-5xl
+                           mb-5">
+                    ✍️
+                </div>
+
+                <h3 class="text-2xl
+                           font-bold
+                           mb-3">
+                    No articles yet
+                </h3>
+
+                <p class="text-slate-500
+                           mb-6">
+                    Start writing your first article.
+                </p>
+
+
+                <a href="/add-article" class="inline-flex
+                           bg-slate-900
+                           text-white
+                           px-6 py-3
+                           rounded-lg
+                           font-semibold
+                           hover:bg-slate-700
+                           transition">
+                    Create Article
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= DELETE MODAL ================= -->
+
+    <div id="deleteModal" class="hidden fixed inset-0 z-50
+               items-center justify-center
+               bg-black/50
+               px-6">
+
+        <div class="bg-white
+                   rounded-2xl
+                   shadow-2xl
+                   max-w-md
+                   w-full
+                   p-8">
+
+            <div class="w-14 h-14
+                       bg-red-100
+                       text-red-600
+                       rounded-full
+                       flex items-center
+                       justify-center
+                       text-2xl
+                       mx-auto mb-5">
+                !
+            </div>
+
+
+            <h2 class="text-2xl
+                       font-bold
+                       text-center
+                       mb-3">
+                Delete Article?
+            </h2>
+
+
+            <p class="text-slate-500
+                       text-center
+                       mb-2">
+                Are you sure you want to delete:
+            </p>
+
+
+            <p id="deleteArticleTitle" class="font-semibold
+                       text-center
+                       text-slate-900
+                       mb-8">
+            </p>
+
+
+            <div class="flex gap-3">
+
+                <button type="button" onclick="closeDeleteModal()" class="flex-1
+               px-5 py-3
+               rounded-lg
+               border
+               border-slate-300
+               text-slate-700
+               font-semibold
+               hover:bg-slate-50
+               transition">
+                    Cancel
+                </button>
+
+
+                <form id="deleteForm" method="POST" action="" class="flex-1">
+
+                    <button type="submit" class="w-full
+                   px-5 py-3
+                   rounded-lg
+                   bg-red-600
+                   text-white
+                   font-semibold
+                   hover:bg-red-700
+                   transition">
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- JavaScript -->
+
+            <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
